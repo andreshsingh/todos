@@ -1,22 +1,15 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Grid, Button } from 'react-bootstrap';
+
+import { fetchTodos } from './../actions/todosAction';
 
 import './index.css';
 
 class Todos extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: [],
-    }
-  }
-
   componentDidMount() {
-    this.setState({ todos: this.props.todos });
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setState({ todos: newProps.todos });
+    console.log(this.props.todos);
+    this.props.fetchTodos();
   }
 
   updateTodo = (todo) => {
@@ -60,7 +53,7 @@ class Todos extends Component {
     return (
       <Grid>
         <ListGroup>
-          {this.state.todos.map((todo) =>
+          {this.props.todos.map((todo) =>
             <ListGroupItem key={todo.id}>
               {this.listItem(todo)}
             </ListGroupItem>
@@ -71,4 +64,8 @@ class Todos extends Component {
   }
 }
 
-export default Todos;
+const mapStateToProps = state => ({
+  todos: state.todos.todos
+})
+
+export default connect(mapStateToProps, { fetchTodos })(Todos);

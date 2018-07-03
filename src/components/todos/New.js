@@ -1,5 +1,8 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Grid, FormGroup, Button, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
+
+import { addTodo } from './../actions/todosAction';
 
 class New extends Component {
   constructor(props, context) {
@@ -38,7 +41,7 @@ class New extends Component {
           this.props.history.push('/todos');
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -63,4 +66,4 @@ class New extends Component {
   }
 }
 
-export default New;
+export default connect(null, { addTodo })(New);

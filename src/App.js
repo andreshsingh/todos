@@ -1,7 +1,9 @@
+import { Provider } from 'react-redux';
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import store from './store';
 import Home from './components/Home';
 import New from './components/todos/New';
 import Todos from './components/todos/Index';
@@ -11,32 +13,6 @@ class App extends Component {
     super();
     this.state = {
       todos: []
-    }
-  }
-
-  async componentDidMount() {
-    const todos = await (await fetch('http://localhost:3001/todos.json')).json();
-    this.setState({ todos });
-  }
-
-  async addTodo(newTodo) {
-    try {
-      let resp = await (await fetch('http://127.0.0.1:3001/todos.json', {
-        body: JSON.stringify(newTodo), // must match 'Content-Type' header
-        credentials: 'same-origin',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'content-type': 'application/json'
-        },
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
-      })).json();
-      let todos = this.state.todos;
-      todos.push(resp);
-      this.setState({ todos });
-      return true;
-    } catch (e) {
-      console.log(e);
     }
   }
 
@@ -82,32 +58,34 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <Navbar>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">React-Todo-App</a>
-              </Navbar.Brand>
-            </Navbar.Header>
-            <Nav className="pull-right">
-              <NavItem eventKey={1} href="/todos">
-                Todos
+      <Provider store={store}>
+        <BrowserRouter>
+          <div>
+            <Navbar>
+              <Navbar.Header>
+                <Navbar.Brand>
+                  <a href="/">React-Todo-App</a>
+                </Navbar.Brand>
+              </Navbar.Header>
+              <Nav className="pull-right">
+                <NavItem eventKey={1} href="/todos">
+                  Todos
               </NavItem>
-              <NavItem eventKey={2} href="/new">
-                New
+                <NavItem eventKey={2} href="/new">
+                  New
               </NavItem>
-            </Nav>
-          </Navbar>
-          <Switch>
-            <Route path="/" exact render={Home} />
-            <Route path="/todos" exact render={
-              props => <Todos {...props} todos={this.state.todos} deleteTodo={this.deleteTodo.bind(this)} updateTodo={this.updateTodo.bind(this)} />
-            } />
-            <Route path="/new" exact component={props => <New {...props} addTodo={this.addTodo.bind(this)} />} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+              </Nav>
+            </Navbar>
+            <Switch>
+              <Route path="/" exact render={Home} />
+              <Route path="/todos" exact render={
+                props => <Todos {...props} deleteTodo={this.deleteTodo.bind(this)} updateTodo={this.updateTodo.bind(this)} />
+              } />
+              <Route path="/new" exact component={props => <New {...props} />} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
