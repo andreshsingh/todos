@@ -44,6 +44,9 @@ class New extends Component {
       .catch(err => console.log(err));
   }
 
+  componentDidMount() {
+  }
+
   render() {
     return (
       <Grid>
@@ -66,4 +69,9 @@ class New extends Component {
   }
 }
 
-export default connect(null, { addTodo })(New);
+const mapStateToProps = state => ({
+  todos: state.todos.todos,
+  todo: state.todos.todo
+})
+
+export default connect(mapStateToProps, { addTodo })(New);

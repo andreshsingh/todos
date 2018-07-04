@@ -2,26 +2,21 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Grid, Button } from 'react-bootstrap';
 
-import { fetchTodos } from './../actions/todosAction';
+import { fetchTodos, deleteTodo, updateSpecificTodo } from './../actions/todosAction';
 
 import './index.css';
 
 class Todos extends Component {
   componentDidMount() {
-    console.log(this.props.todos);
     this.props.fetchTodos();
   }
 
   updateTodo = (todo) => {
-    let updateTodo = todo
-    if (updateTodo.isComplete === true) {
-      updateTodo.isComplete = false;
-    } else {
-      updateTodo.isComplete = true;
-    }
-    this.props.updateTodo(updateTodo)
-      .then(resp => console.log('Updated Todo successfully'))
-      .catch(err => console.log(err))
+    console.log(todo);
+    console.log(this.props.todos);
+    this.props.updateSpecificTodo(todo)
+    //   .then(resp => console.log('Updated Todo successfully'))
+    //   .catch(err => console.log(err))
   }
 
   deleteTodo = (todo) => {
@@ -65,7 +60,8 @@ class Todos extends Component {
 }
 
 const mapStateToProps = state => ({
-  todos: state.todos.todos
+  todos: state.todos.todos,
+  todo: state.todos.todo
 })
 
-export default connect(mapStateToProps, { fetchTodos })(Todos);
+export default connect(mapStateToProps, { fetchTodos, deleteTodo, updateSpecificTodo })(Todos);
