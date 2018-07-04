@@ -1,7 +1,6 @@
 import { FETCH_TODOS, NEW_TODO, DELETE_TODO, UPDATE_TODO } from './types';
 
 export function fetchTodos() {
-  console.log('fetching')
   return async function (dispatch) {
     const todos = await (await fetch('http://localhost:3001/todos.json')).json();
     dispatch({
@@ -12,8 +11,6 @@ export function fetchTodos() {
 }
 
 export function addTodo(newTodo) {
-  console.log('newTodo')
-
   return async function (dispatch) {
     try {
       let resp = await (await fetch('http://127.0.0.1:3001/todos.json', {
@@ -38,8 +35,6 @@ export function addTodo(newTodo) {
 }
 
 export function deleteTodo(todo) {
-  console.log('delete')
-
   return async function (dispatch) {
     try {
       let resp = await (await fetch('http://127.0.0.1:3001/todos/' + todo.id + '.json', {
@@ -63,8 +58,6 @@ export function deleteTodo(todo) {
 }
 
 export function updateSpecificTodo(todo) {
-  console.log('update')
-
   return async function (dispatch) {
     try {
       var isCompleteUpdate;

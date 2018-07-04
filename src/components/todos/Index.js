@@ -12,11 +12,9 @@ class Todos extends Component {
   }
 
   updateTodo = (todo) => {
-    console.log(todo);
-    console.log(this.props.todos);
     this.props.updateSpecificTodo(todo)
-    //   .then(resp => console.log('Updated Todo successfully'))
-    //   .catch(err => console.log(err))
+      .then(resp => console.log('Updated Todo successfully'))
+      .catch(err => console.log(err))
   }
 
   deleteTodo = (todo) => {

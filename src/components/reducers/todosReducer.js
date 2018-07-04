@@ -8,7 +8,6 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_TODOS:
-      console.log('fetching');
       return {
         ...state,
         todos: action.payload
@@ -25,13 +24,11 @@ export default function (state = initialState, action) {
         todos: updatedItems
       }
     case NEW_TODO:
-      console.log('New');
       return {
         ...state,
         todos: [...state.todos, action.payload]
       }
     case DELETE_TODO:
-      console.log('DELETing');
       let todos = state.todos;
       let newTodos = todos.filter(todo => todo.id !== action.payload.id);
       return {
@@ -39,7 +36,6 @@ export default function (state = initialState, action) {
         todos: newTodos
       }
     default:
-      console.log('default');
       return state;
   }
 }
