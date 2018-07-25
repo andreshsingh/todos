@@ -1,13 +1,15 @@
 import { Provider } from 'react-redux';
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
 
 import store from './store';
-import Home from './components/Home';
-import New from './components/todos/New';
-import Todos from './components/todos/Index';
-import SignUp from './components/signUp/index';
+import LandingPage from './components/Home';
+// import New from './components/todos/New';
+// import Todos from './components/todos/Index';
+import Login from './components/login/Index';
+import SignUp from './components/signUp/Index';
+import Navbar from './components/layout/Navbar';
+import PrivatePages from './components/PrivatePages';
 
 class App extends Component {
   render() {
@@ -15,22 +17,10 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Navbar>
-              <Navbar.Header>
-                <Navbar.Brand>
-                  <Link to="/">
-                    React-Todo-App
-                  </Link>
-                </Navbar.Brand>
-              </Navbar.Header>
-              <Nav className="pull-right">
-                <NavItem componentClass={Link} href="/signUp" to="/signUp">SignUp</NavItem>
-              </Nav>
-            </Navbar>
             <Switch>
-              <Route path="/" exact render={Home} />
-              <Route path="/todos" exact component={Todos} />
-              <Route path="/new" exact component={New} />
+              <Route path="/" exact component={LandingPage} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/todos" component={PrivatePages} />
               <Route path="/signUp" exact component={SignUp} />
             </Switch>
           </div>

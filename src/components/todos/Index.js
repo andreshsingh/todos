@@ -45,6 +45,9 @@ class Todos extends Component {
   render() {
     return (
       <Grid>
+        <div>
+          Todos
+        </div>
         <ListGroup>
           {this.props.todos.map((todo) =>
             <ListGroupItem key={todo.id}>

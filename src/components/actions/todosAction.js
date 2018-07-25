@@ -2,11 +2,15 @@ import { FETCH_TODOS, NEW_TODO, DELETE_TODO, UPDATE_TODO } from './types';
 
 export function fetchTodos() {
   return async function (dispatch) {
-    const todos = await (await fetch('http://localhost:3001/todos.json')).json();
-    dispatch({
-      type: FETCH_TODOS,
-      payload: todos
-    })
+    try {
+      const todos = await (await fetch('http://localhost:3001/todos.json')).json();
+      dispatch({
+        type: FETCH_TODOS,
+        payload: todos
+      })
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 
