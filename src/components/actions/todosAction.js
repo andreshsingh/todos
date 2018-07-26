@@ -1,9 +1,13 @@
 import { FETCH_TODOS, NEW_TODO, DELETE_TODO, UPDATE_TODO } from './types';
 
-export function fetchTodos() {
+export function fetchTodos(token) {
+  let headers = { "Content-Type": "application/json" };
+  headers["Authorization"] = `Token ${token}`;
   return async function (dispatch) {
     try {
-      const todos = await (await fetch('http://localhost:3001/todos.json')).json();
+      const todos = await (await fetch('http://localhost:3001/todos.json', {
+        headers
+      })).json();
       dispatch({
         type: FETCH_TODOS,
         payload: todos
@@ -14,7 +18,7 @@ export function fetchTodos() {
   }
 }
 
-export function addTodo(newTodo) {
+export function addTodo(newTodo, token) {
   return async function (dispatch) {
     try {
       let resp = await (await fetch('http://127.0.0.1:3001/todos.json', {
@@ -22,7 +26,8 @@ export function addTodo(newTodo) {
         credentials: 'same-origin',
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Token ${token}`
         },
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin
@@ -38,14 +43,15 @@ export function addTodo(newTodo) {
   }
 }
 
-export function deleteTodo(todo) {
+export function deleteTodo(todo, token) {
   return async function (dispatch) {
     try {
       let resp = await (await fetch('http://127.0.0.1:3001/todos/' + todo.id + '.json', {
         credentials: 'same-origin',
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Token ${token}`
         },
         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin
@@ -61,7 +67,7 @@ export function deleteTodo(todo) {
   }
 }
 
-export function updateSpecificTodo(todo) {
+export function updateSpecificTodo(todo, token) {
   return async function (dispatch) {
     try {
       var isCompleteUpdate;
@@ -76,7 +82,8 @@ export function updateSpecificTodo(todo) {
         credentials: 'same-origin',
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Token ${token}`
         },
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin

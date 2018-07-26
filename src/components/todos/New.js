@@ -35,7 +35,7 @@ class New extends Component {
       task: this.state.todoTask,
       isComplete: this.state.isComplete
     }
-    this.props.addTodo(todo)
+    this.props.addTodo(todo, this.props.token)
       .then(resp => {
         if (resp === true) {
           this.props.history.push('/todos');
@@ -71,7 +71,8 @@ class New extends Component {
 
 const mapStateToProps = state => ({
   todos: state.todos.todos,
-  todo: state.todos.todo
+  todo: state.todos.todo,
+  token: state.loginCredentials.token.jwt
 })
 
 export default connect(mapStateToProps, { addTodo })(New);

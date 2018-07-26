@@ -8,17 +8,17 @@ import './index.css';
 
 class Todos extends Component {
   componentDidMount() {
-    this.props.fetchTodos();
+    this.props.fetchTodos(this.props.token);
   }
 
   updateTodo = (todo) => {
-    this.props.updateSpecificTodo(todo)
+    this.props.updateSpecificTodo(todo, this.props.token)
       .then(resp => console.log('Updated Todo successfully'))
       .catch(err => console.log(err))
   }
 
   deleteTodo = (todo) => {
-    this.props.deleteTodo(todo)
+    this.props.deleteTodo(todo, this.props.token)
       .then(resp => console.log("Succesfully deleted todo."))
       .catch(err => console.log(err));
   }
@@ -46,7 +46,7 @@ class Todos extends Component {
     return (
       <Grid>
         <div>
-          Todos
+          <h2> LIST OF TODOS</h2>
         </div>
         <ListGroup>
           {this.props.todos.map((todo) =>
@@ -62,7 +62,8 @@ class Todos extends Component {
 
 const mapStateToProps = state => ({
   todos: state.todos.todos,
-  todo: state.todos.todo
+  todo: state.todos.todo,
+  token: state.loginCredentials.token.jwt
 })
 
 export default connect(mapStateToProps, { fetchTodos, deleteTodo, updateSpecificTodo })(Todos);
