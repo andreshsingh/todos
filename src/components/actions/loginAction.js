@@ -1,4 +1,4 @@
-import { FETCH_TOKEN } from './types';
+import { FETCH_TOKEN, LOG_OUT } from './types';
 
 export function loginToRails(credentials) {
   return async function (dispatch) {
@@ -21,5 +21,13 @@ export function loginToRails(credentials) {
     } catch (e) {
       console.log(e);
     }
+  }
+}
+
+export function logOut() {
+  return function (dispatch) {
+    dispatch({
+      type: LOG_OUT
+    })
   }
 }

@@ -1,4 +1,4 @@
-import { FETCH_TOKEN } from './../actions/types';
+import { FETCH_TOKEN, LOG_OUT } from './../actions/types';
 
 const initialState = {
   token: { jwt: '' },
@@ -11,6 +11,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         token: action.payload
+      }
+    case LOG_OUT:
+      return {
+        ...state,
+        token: { jwt: '' }
       }
     default:
       return state;
